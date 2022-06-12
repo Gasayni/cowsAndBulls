@@ -35,6 +35,10 @@ public class Main {
 
 
     public static void main(String[] args) throws ParseException {
+        startMethod();
+    }
+
+    public static void startMethod() throws ParseException {
         // Прочитаем сначала, что есть в файле и вытащим номер последней игры
         numberGame = new ReadFile().methodRead();
 
@@ -50,13 +54,27 @@ public class Main {
 
     public static String myRandom() {
         StringBuilder n = new StringBuilder();
-        for (int i = 0; i < countNumber; i++) {
-            n.append((int) (Math.random() * 9));
+        // пока не придумаем все числа
+        while (n.length() != countNumber) {
+            boolean flag = true;
+            while (flag) {
+                flag = false;
+                int k = (int) (Math.random() * 8);
+                // мы проверяем встречаются ли одинаковые числа
+                String[] sMas = n.toString().split("");
+                for (String s : sMas) {
+                    if (s.equals(String.valueOf(k))) {
+                        flag = true;
+                    }
+                }
+                // если нет одинаковых, то записываем
+                if (!flag) n.append(k);
+            }
         }
         return n.toString();
     }
 
-    public static void inputMethod() {
+    public static void inputMethod() throws ParseException {
         Scanner input = new Scanner(System.in);
         System.out.println("Введите " + countNumber + "х значное число");
         String inputLine = input.next();
@@ -67,7 +85,7 @@ public class Main {
         }
     }
 
-    public static boolean checkInputStringMethod(String s) {
+    public static boolean checkInputStringMethod(String s) throws ParseException {
         // проверяем на числа
         int n;
         try {
@@ -86,7 +104,7 @@ public class Main {
         return true;
     }
 
-    public static void check(String inputLine) {
+    public static void check(String inputLine) throws ParseException {
         // разделили на массив символов
         String[] inputNumMas = inputLine.split("");
         String[] guessNumMas = guessNum.split("");
@@ -158,7 +176,7 @@ public class Main {
         }
     }
 
-    public static void printMethod(int bulls, int cows, String inputLine) {
+    public static void printMethod(int bulls, int cows, String inputLine) throws ParseException {
         ReadFile readFile = new ReadFile();
         WriteFile writeFile = new WriteFile();
         StringBuilder reportLine = new StringBuilder();
@@ -173,6 +191,7 @@ public class Main {
             // записывается в файл
 
             writeFile.writeFile("reportGame.txt", reportLine.toString());
+            replayGame();
         } else {
             String lineReportWriteInFile = "\t Запрос: " + inputLine + " Ответ: " + cows + " "
                     + wordend(cows, "cows") + " " + bulls + " " + wordend(bulls, "bulls");
@@ -190,5 +209,13 @@ public class Main {
 
     }
 
-
+    public static void replayGame() throws ParseException {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Хотите сыграть еще раз?");
+        System.out.println("Введите \"Да\" или \"Нет\"");
+        String yesOrNo = input.next();
+        if (yesOrNo.equals("Да") || yesOrNo.equals("да")) {
+            startMethod();
+        }
+    }
 }
