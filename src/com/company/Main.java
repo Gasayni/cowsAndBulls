@@ -16,15 +16,12 @@ package com.company;
 //      Строка была угадана за 5 попыток
 // Game №2...
 
-// При запуске программы занаво. Из файла необх. прочитать номер последней игры и при записи продолжить нумерацию
+// При запуске программы заново. Из файла необх. прочитать номер последней игры и при записи продолжить нумерацию
 // * человек загадывает строку, а программа угадывает
 // Ps. Постараться написать в стиле ООП
 
 
-import java.io.FileWriter;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -38,6 +35,11 @@ public class Main {
         startMethod();
     }
 
+    //TODO создай класс Game, в нем храни всю информацию об игре
+    //  public static int countNumber = 4;
+    //    public static int numberGame;
+    //    public static int tryCount = 0;
+    // туда перенеси этот метод, назови startGame()
     public static void startMethod() throws ParseException {
         // Прочитаем сначала, что есть в файле и вытащим номер последней игры
         numberGame = new ReadFile().methodRead();
@@ -52,16 +54,25 @@ public class Main {
         inputMethod();
     }
 
+    //TODO метод генерирует случайное число, ну или строку, может назвать его так, чтобы
+    // было понятно что он делает?
     public static String myRandom() {
         StringBuilder n = new StringBuilder();
         // пока не придумаем все числа
+
+        //TODO мне кажется вот этот двойной while можно как-то упростить
         while (n.length() != countNumber) {
             boolean flag = true;
             while (flag) {
                 flag = false;
+
+                //TODO Math.random возвращает значение от 0 до 1, причем 1 не входит в этот диапазон
+                // чтобы получить значение от 0 до 9, тебе нужно умножать на 10
                 int k = (int) (Math.random() * 8);
                 // мы проверяем встречаются ли одинаковые числа
                 String[] sMas = n.toString().split("");
+                //TODO у класса String есть метод contains, который проверяет входит ли в исходную строку
+                // подстрока, которую мы передаем
                 for (String s : sMas) {
                     if (s.equals(String.valueOf(k))) {
                         flag = true;
@@ -87,9 +98,8 @@ public class Main {
 
     public static boolean checkInputStringMethod(String s) throws ParseException {
         // проверяем на числа
-        int n;
         try {
-            n = Integer.parseInt(s);
+           Integer.parseInt(s);
         } catch (NumberFormatException e) {
             System.out.println("Вы ввели что-то не то, попробуйте еще раз \n");
             inputMethod();
