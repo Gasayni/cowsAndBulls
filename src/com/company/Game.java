@@ -56,30 +56,22 @@ public class Game {
         // пока не придумаем все числа
 
         //TODO мне кажется вот этот двойной while можно как-то упростить
-        while (n.length() != countNumber) {
-            boolean flag = true;
-            while (flag) {
-                flag = false;
+        boolean flagTryWrite = false;
+        while ((n.length() != countNumber) && !flagTryWrite) {
+            flagTryWrite = true;
 
-                //TODO Math.random возвращает значение от 0 до 1, причем 1 не входит в этот диапазон
-                // чтобы получить значение от 0 до 9, тебе нужно умножать на 10
-                // нельзя использовать число 9!, поэтому от 0 до 8
-                int k = (int) (Math.random() * 9);
-                // мы проверяем встречаются ли одинаковые числа
-//                String[] sMas = n.toString().split("");
-                //TODO у класса String есть метод contains, который проверяет входит ли в исходную строку
-                // подстрока, которую мы передаем
-                if (n.toString().contains(String.valueOf(k))) {
-                    flag = true;
-                }
-//                for (String s : sMas) {
-//                    if (s.equals(String.valueOf(k))) {
-//                        flag = true;
-//                    }
-//                }
-                // если нет одинаковых, то записываем
-                if (!flag) n.append(k);
+            //TODO Math.random возвращает значение от 0 до 1, причем 1 не входит в этот диапазон
+            // чтобы получить значение от 0 до 9, тебе нужно умножать на 10
+            // !!!! Вроде нельзя использовать число 9!, поэтому от 0 до 8
+            int k = (int) (Math.random() * 9);
+            // мы проверяем встречаются ли одинаковые числа
+            //TODO у класса String есть метод contains, который проверяет входит ли в исходную строку
+            // подстрока, которую мы передаем
+            if (n.toString().contains(String.valueOf(k))) {
+                flagTryWrite = false;
             }
+            // если нет одинаковых, то записываем
+            if (flagTryWrite) n.append(k);
         }
         return n.toString();
     }
