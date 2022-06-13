@@ -33,7 +33,7 @@ public class ReadFile {
     // например getLastGameNumber или getNumberOfLastGame
     public int methodRead() {
         // При запуске программы заново.
-        // Из файла необх. прочитать номер последней игры и при записи продолжить нумерацию
+        // Из файла необходимо прочитать номер последней игры и при записи продолжить нумерацию
 
         // Читаем все данные из файла
         String fileLine = readFile("reportGame.txt");
@@ -45,8 +45,8 @@ public class ReadFile {
 
             //TODO может лучше искать с конца, найти первую строку, которая начинается на Game
             // и вытащить оттуда номер
-            for (int i = 0; i < fileLinesMas.length; i++) {
-                String[] laneMas = fileLinesMas[i].split(" ");
+            for (String fileLinesMa : fileLinesMas) {
+                String[] laneMas = fileLinesMa.split(" ");
                 if (laneMas[0].equals("Game")) {
                     numberGame = Integer.parseInt(laneMas[1].substring(1));
                 }
