@@ -23,18 +23,14 @@ package com.company;
 import java.text.ParseException;
 import java.util.Scanner;
 
-//TODO создай класс Game, в нем храни всю информацию об игре
-//  public static int countNumber = 4;
-//    public static int numberGame;
-//    public static int tryCount = 0;
-// туда перенеси этот метод, назови startGame()
 public class Game {
 
+    //TODO static здесь наверное не нужен
+    // и все переменные должны быть private
     public static String guessNum;
     public int countNumber = 4;
     public int numberGame;
     public int tryCount = 0;
-
     public void startGame() throws ParseException {
         // Прочитаем сначала, что есть в файле и вытащим номер последней игры
         numberGame = new ReadFile().methodRead();
@@ -49,29 +45,17 @@ public class Game {
         new InputClass().inputMethod();
     }
 
-    //TODO метод генерирует случайное число, ну или строку, может назвать его так, чтобы
-    // было понятно что он делает?
     public String generateRandomNumber() {
         StringBuilder n = new StringBuilder();
         // пока не придумаем все числа
 
-        //TODO мне кажется вот этот двойной while можно как-то упростить
-        boolean flagTryWrite = false;
-        while ((n.length() != countNumber) && !flagTryWrite) {
-            flagTryWrite = true;
-
-            //TODO Math.random возвращает значение от 0 до 1, причем 1 не входит в этот диапазон
-            // чтобы получить значение от 0 до 9, тебе нужно умножать на 10
-            // !!!! Вроде нельзя использовать число 9!, поэтому от 0 до 8
-            int k = (int) (Math.random() * 9);
+        while ((n.length() != countNumber)) {
+            // в условии цифры от 0 до 9 включительно
+            int k = (int) (Math.random() * 10);
             // мы проверяем встречаются ли одинаковые числа
-            //TODO у класса String есть метод contains, который проверяет входит ли в исходную строку
-            // подстрока, которую мы передаем
-            if (n.toString().contains(String.valueOf(k))) {
-                flagTryWrite = false;
+            if (!n.toString().contains(String.valueOf(k))) {
+                n.append(k);
             }
-            // если нет одинаковых, то записываем
-            if (flagTryWrite) n.append(k);
         }
         return n.toString();
     }
